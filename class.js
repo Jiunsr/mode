@@ -53,20 +53,25 @@ console.log("🚀 ~ file: class.js ~ line 50 ~ keys", keys)
 // 父类的属性也会继承为子类的属性，成为子类自身的属性
 
 class Bar {
-  userId = 1
+  staticId = 1;
   constructor() {
+    this.userId = 1
     this.createTime = new Date().toLocaleDateString()
   }
-  static getId(){
+  getId(){
     return this.userId
   }
   getData() {
     return {time:this.createTime, id:Bar.userId};
   }
+  static calc(...num){
+    return num.reduce((a,b)=>a+b, 0)
+  }
 }
 let val68 = new Bar()
 console.warn(val68);
 console.warn(Bar.getId());
+// 只有静态方法，没有静态的属性
 
 
 
