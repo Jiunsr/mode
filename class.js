@@ -96,7 +96,6 @@ const Cls89 = class Me {
   }
 }
 let cls89 = new Cls89()
-console.warn(cls89.getClassName())
 // [类表达式] 类名是Me, Me只允许在Class内部可用，在外部只能用Cls89。
 
 let person = new class {
