@@ -48,6 +48,7 @@ Object.getOwnPropertyNames(child)
 class Bar {
   userId = 1;   // 同等于在(this.)实例上定义
   constructor() {
+    this.userId = 1
     this.createTime = new Date().toLocaleDateString()
   }
   static calc(...num){
@@ -56,6 +57,9 @@ class Bar {
   }
   getData() {
     console.warn({time:this.createTime, userId:this.userId});
+  }
+  static calc(...num){
+    return num.reduce((a,b)=>a+b, 0)
   }
 }
 // 没有静态属性，只有静态方法
