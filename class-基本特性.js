@@ -1,5 +1,5 @@
 
-// 特性巩固
+// 基本特性巩固
 class Point{
   constructor(){
     this.userId = 1
@@ -10,35 +10,30 @@ class Point{
 }
 
 let isPoint = Point.prototype.constructor === Point
-console.log("🚀 ~ file: Untitled-1 ~ line 11 ~ isPoint", isPoint)
-// 类的构造函数指向类本身
+// 类的构造函数，等于类本身
 
 let p1 = new Point()
 let isP1 = p1 instanceof Point.prototype.constructor
-console.log("🚀 ~ file: Untitled-1 ~ line 16 ~ isP1", isP1)
-// 创建实例指向构造函数
+// new的实例，指向构造函数
 
 let point = new Point()
-let key = Object.keys(point)
-console.log("🚀 ~ file: Untitled-1 ~ line 24 ~ key", key)
-console.log("🚀 ~ file: Untitled-1 ~ line 25 ~ key1", Object.getOwnPropertyNames(Point.prototype))
-// 类的原型方法不可枚举（Object.getOwnPropertyNames-取得所有枚举和不可枚举属性）
+Object.keys(point) // [userId]
+Object.getOwnPropertyNames(Point.prototype) // [constructor,toSay]
+// 实例的原型方法，不可枚举  // Object.getOwnPropertyNames-取得所有枚举和不可枚举属性
 
 class Foo{
   constructor(){
     return new Point()
   }
 }
-let isFoo = new Foo() instanceof Foo
-console.log("🚀 ~ file: Untitled-1 ~ line 35 ~ isFoo", isFoo)
-// 类默认有构造函数，构造函数默认返回实例对象(this)，可以指定返回另一个对象。class类必须new调用
+new Foo() instanceof Foo // false
+// 默认的构造函数，返回实例对象(this)，可修改返回值。
 
 let point37 = new Point()
 point37.hasOwnProperty('userId') // true
 point37.hasOwnProperty('toSay') // false
-'toSay' in point37 // true
-// 实例的属性，除非显示定义在实例本身(this.)，否则都定义在原型上。（hasOwnProperty-获取对象自身属性，原型方法除外）
-
+'toSay' in point37 // true #in语法，判断是否在原型或实例本身
+// "this."显示定义的属性在实例本身，其他都定义在原型。 // hasOwnProperty-获取对象自身属性，原型方法除外
 
 class Child extends Point {
   constructor(){
@@ -47,12 +42,11 @@ class Child extends Point {
   }
 }
 let child = new Child()
-let keys = Object.getOwnPropertyNames(child)
-console.log("🚀 ~ file: class.js ~ line 50 ~ keys", keys)
-// 父类的属性也会继承为子类的属性，成为子类自身的属性
+Object.getOwnPropertyNames(child)
+// 父类的属性，将继承为子类的属性。静态的"属性方法"除外
 
 class Bar {
-  userId = 1;   // 同等于在constructor(this.实例)上定义
+  userId = 1;   // 同等于在(this.)实例上定义
   constructor() {
     this.createTime = new Date().toLocaleDateString()
   }
@@ -92,7 +86,7 @@ const Cls89 = class Me {
   }
 }
 let cls89 = new Cls89()
-console.warn(cls89.getClassName())
+// console.warn(cls89.getClassName())
 // [类表达式] 类名是Me, Me只允许在Class内部可用，在外部只能用Cls89。
 
 let person = new class {
@@ -100,11 +94,29 @@ let person = new class {
   sayName() {
     console.log(this.name)
   }
-}('张三')
-person.sayName();
+}('张三') 
 // [类表达式] Class立即执行方式
 
+let Foo107 = class {};
+class Bar108 extends Foo107 {
+}
+// 类不存在变量提升
 
+class Logger {
+  constructor() {
+    this.printName = this.printName.bind(this)
+  }
+  printName(name = 'there') {
+    this.print(`Hello ${name}`);
+  }
+  print(text) {
+    console.log(text);
+  }
+}
+const logger = new Logger();
+const { printName } = logger;
+// printName(); // 'print' of undefined
+// 提取方法单独使用，this会默认指向运行时的环境，导致找不到print方法报错
 
 
 
