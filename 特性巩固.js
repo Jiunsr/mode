@@ -43,7 +43,7 @@ class Child extends Point {
 }
 let child = new Child()
 Object.getOwnPropertyNames(child)
-// 父类的属性，将继承为子类的属性。静态属性不继承
+// 父类的属性，将继承为实例的属性。静态属性不继承给实例
 
 class Bar {
   userId = 1;   // 同等于在(this.)上定义
@@ -119,10 +119,16 @@ const { printName } = logger;
 // printName(); // 'print' of undefined
 // 提取方法单独使用时，this会指向运行时的环境，导致找不到print方法报错
 
+// 静态属性，只允许静态方法访问。静态只能静态调用。
+// 在类的内部，有权访问"自身创建的实例"的静态属性
+// 父类静态方法
+    //会被子类继承
+    //不被实例继承
+// 静态块：用于静态属性的初始化逻辑，每个类值有一个"静态块"，只运行一次
 
-
-
-
+// 代码组织原则
+    //相关的代码应该放在一起
+    //实例属性可统一定义在类的顶层。写法更简洁
 
 
 
