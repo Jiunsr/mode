@@ -43,10 +43,10 @@ class Child extends Point {
 }
 let child = new Child()
 Object.getOwnPropertyNames(child)
-// 父类的属性，将继承为子类的属性。静态的"属性方法"除外
+// 父类的属性，将继承为子类的属性。静态属性不继承
 
 class Bar {
-  userId = 1;   // 同等于在(this.)实例上定义
+  userId = 1;   // 同等于在(this.)上定义
   constructor() {
     this.userId = 1
     this.createTime = new Date().toLocaleDateString()
@@ -62,15 +62,15 @@ class Bar {
     return num.reduce((a,b)=>a+b, 0)
   }
 }
-// 没有静态属性，只有静态方法
+// es6没有静态属性，只有静态方法。es2022：私有属性#weight
 
 let p70 = new Point()
 let p71 = new Point()
 p70.__proto__ === p71.__proto__; //true
-// 类的所有实例共享一个原型对象
+// 类的实例，共享同一个原型对象
 
 p70.__proto__.printName = () => console.warn('ops')
-// 通过实例(__proto__)改写原型方法
+// 通过实例的"__proto__"，改写原型方法
 
 class Class77 {
   get prop() { return 'getter str' }
@@ -82,16 +82,14 @@ const method83 = 'getAtea'
 class Cls83 {
   [method83]() {}
 }
-// [属性表达式] 类的属性名，可以用表达式
+// 属性名，表达式写法
 
 const Cls89 = class Me {
   getClassName() {
     return Me.name
   }
 }
-let cls89 = new Cls89()
-// console.warn(cls89.getClassName())
-// [类表达式] 类名是Me, Me只允许在Class内部可用，在外部只能用Cls89。
+// [类表达式] 类名是Me，只能在类的内部用，外部只能用Cls89。
 
 let person = new class {
   constructor(name) { this.name = name }
@@ -99,12 +97,11 @@ let person = new class {
     console.log(this.name)
   }
 }('张三') 
-// [类表达式] Class立即执行方式
+// [类表达式] 立即执行写法
 
 let Foo107 = class {};
-class Bar108 extends Foo107 {
-}
-// 类不存在变量提升
+class Bar108 extends Foo107 {}
+// 类，没有变量提升
 
 class Logger {
   constructor() {
@@ -120,7 +117,7 @@ class Logger {
 const logger = new Logger();
 const { printName } = logger;
 // printName(); // 'print' of undefined
-// 提取方法单独使用，this会默认指向运行时的环境，导致找不到print方法报错
+// 提取方法单独使用时，this会指向运行时的环境，导致找不到print方法报错
 
 
 
